@@ -1,0 +1,55 @@
+*{
+    font-family: 'Noto Serif';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(233, 233, 233);
+}
+
+
+/* --------------footer-top---------------- */
+.footer-top-container{
+    background-color: rgb(20, 20, 20);
+    border-bottom: 1px solid white;
+}
+
+.footer-top-main{
+    max-width: 1360px;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
+.structored-link{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 calc(100% / 5);
+    align-items: start;
+    padding: 0 1%;
+}
+
+.structored-link h4,
+.structored-link a,
+.structored-link p{
+    word-break: keep-all;
+    margin: 10px 0;
+    text-decoration: none;
+}
+
+.structored-link a:hover{
+    color: red;
+    cursor: pointer;
+}
+
+.copyright {
+    text-align: center;
+    font-size: large;
+    color: white;
+    padding: 30px 0;
+    background-color: black
+}

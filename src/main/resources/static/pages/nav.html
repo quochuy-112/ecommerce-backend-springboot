@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="/geartech/assets/favicon.png">
+    <link rel="stylesheet" href="/geartech/css/index.css">
+    <link rel="stylesheet" href="/geartech/css/nav.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap" />
+</head>
+<body>
+<div class="padding-nav">
+    <nav>
+        <div class="left-nav">
+            <a href="/geartech/index.html"><img src="/geartech/assets/LOGO.png" alt="" class="logo"></a>
+            <a onclick="openPopup()" ><span class="material-symbols-outlined">apps</span>Danh mục</a>
+        </div>
+
+        <div class="search-box">
+            <input type="text" placeholder="Bạn cần tìm gì?"></input>
+            <span class="material-symbols-outlined padding-icon">search</span>
+        </div>
+
+        <div class="right-nav">
+            <a href=""><span class="material-symbols-outlined icon">headset</span>Hotline 1900 6868</a>
+            <a href="#"><span class="material-symbols-outlined icon">pin_drop</span>Hệ thống showroom</a>
+            <a href=""><span class="material-symbols-outlined icon">pending_actions</span>Tra cứu đơn hàng</a>
+            <a href="/pages/cart.html"><span class="material-symbols-outlined icon">shopping_cart</span>Kiểm tra giỏ hàng</a>
+            <a href="#"><span class="material-symbols-outlined icon">person</span>Thông tin tài khoản</a>
+        </div>
+    </nav>
+</div>
+
+<div class="overplay" id="overplay" onclick="closePopup()">
+    <div class="popup-container">
+        <div class="popup-left" id="popup-left">
+
+        </div>
+
+        <div class="popup-right" id="popup-right">
+
+        </div>
+
+    </div>
+</div>
+
+<script src="/geartech/js/nav.js"></script>
+<script src="/geatech/js/data.js"></script>
+</body>
+</html>

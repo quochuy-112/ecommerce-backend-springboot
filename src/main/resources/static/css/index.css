@@ -1,0 +1,296 @@
+*{
+    font-family: 'Noto Serif';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(233, 233, 233);
+}
+
+
+
+/* -------------banner----------- */
+.banner{
+    max-width: 1360px;
+    max-height: 420px;
+    overflow: hidden;
+    margin: 80px auto 1% auto;
+    position: relative;
+    border-radius: 3px;
+}
+
+.carousel{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+}
+
+.carousel img{
+    flex-shrink: 0;
+    width: 100%;
+    height: 60vh;
+    object-fit: cover;
+}
+
+.banner-btn{
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    box-shadow: 0px -1px 10px 0px rgb(163, 163, 163);
+    background-color: white;
+    color: back;
+    border: none;
+    border-radius: 50%;
+}
+
+.banner-btn > span{
+    padding: 5px;
+}
+
+.banner-next {
+    right: 5px;
+}
+
+.banner-prev {
+    left: 5px;
+}
+
+.banner-btn:hover{
+    color: red;
+}
+
+
+
+/* -------------section new product----------- */
+@media screen and (max-width: 1920px){
+    main{
+        max-width: 1360px;
+        margin: 0 auto 1% auto;
+        background-color: rgb(233, 233, 233);
+        border-radius: 3px;
+    }
+}
+
+section{
+    max-width: 1360px;
+    margin: 0 auto 1% auto;
+    background-color: white;
+    border-radius: 3px;
+}
+
+.section-title{
+    padding: 10px;
+    color: black;
+}
+
+.section-showcase{
+    position: relative;
+}
+
+.card-item{
+    border-radius: 3px;
+    border: 1px solid rgb(220, 220, 220);
+    text-decoration: none;
+    color: black;
+    flex: 0 0 260px;
+    background-color: white;
+    margin: 10px 0;
+}
+
+.card-item img{
+    width: 100%;
+    height: 210px;
+    border-radius: 3px 3px 0px 0px;
+}
+
+.card-item:hover{
+    transform: translateY(-5px);
+}
+
+.card-infor{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 20px 20px 20px;
+    gap: 10px;
+}
+
+.card-infor > h4{
+    max-height: 2.8em;
+    line-height: 1.4em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+}
+
+.hardware{
+    display: flex;
+    gap: 5%;
+}
+
+.hardware span{
+    display: flex;
+    align-items: center;
+    font-size: small;
+}
+
+.rating span{
+    display: flex;
+    align-items: center;
+    font-size: small;
+    color: orangered;
+}
+
+.price{
+    color: red;
+}
+
+.courses-container{
+    overflow: hidden;
+    margin: 0 10px;
+}
+
+.grid-courses{
+    width: 1340px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    transition: transform 0.6s ease-in-out;
+}
+
+.courses-container-btn {
+    color: black;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px -1px 10px 0px rgb(163, 163, 163);
+    background-color: white;
+    border-radius: 50%;
+}
+
+.courses-container-btn > span{
+    padding: 10px;
+    font-size: x-large;
+}
+
+.courses-container-btn:hover{
+    color: red;
+}
+
+.courses-next {
+    right: 0;
+}
+
+.courses-prev {
+    left: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.section-more-btn{
+    margin: 10px;
+    padding: 10px;
+    cursor: pointer;
+    color: rgb(137, 58, 255);
+    border: 2px solid rgb(137, 58, 255);
+    border-radius: 3px;
+    font-size: medium;
+}
+
+
+
+/* --------------tab and subtab-------------- */
+.tab-bar {
+    display: flex;
+    justify-content: start;
+    background-color: white;
+    border-bottom: 2px solid rgb(222, 222, 222);
+    margin: 0 10px 10px 10px;
+    gap: 10px;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.sub-tab-bar {
+    display: flex;
+    color: black;
+    padding: 10px 0;
+    margin: 10px 10px;
+    font-size: 16px;
+    background-color: white;
+    white-space: nowrap;
+    overflow: visible;
+    gap: 10px;
+}
+
+.sub-tab-button{
+    border: none;
+    background-color: rgb(235, 235, 235);
+    color: black;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 50px;
+}
+
+.tab-button.active{
+    border-bottom: 2px solid black;
+}
+
+.sub-tab-button.active{
+    background-color: rgb(190, 190, 255);
+}
+
+
+
+/* --------------category section-------------- */
+.category-section{
+    background-color: white;
+}
+
+.category-section > .section-title{
+    color: black;
+    border-bottom: 1px solid rgb(220, 220, 220);
+}
+
+.category-container{
+    margin: 0 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category-item{
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+    cursor: pointer;
+    width: 110px;
+    height: 110px;
+    text-align: center;
+}
+
+.category-item > img{
+    width: 75px;
+    height: 75px;
+    margin: auto;
+}
+
+.category-item > p{
+    font-size: small;
+}
