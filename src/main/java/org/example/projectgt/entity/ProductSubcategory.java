@@ -3,6 +3,7 @@ package org.example.projectgt.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
@@ -10,10 +11,12 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ProductSubcategory {
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @EqualsAndHashCode.Include
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-    String name;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

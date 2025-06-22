@@ -23,7 +23,7 @@ public class Orders {
     LocalDate orderDate;
 
     @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
-    Set<OrderItem> orderItems = new HashSet<>();
+    Set<OrderItem> orderItems;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

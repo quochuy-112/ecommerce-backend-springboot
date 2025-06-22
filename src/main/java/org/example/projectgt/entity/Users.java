@@ -19,8 +19,10 @@ public class Users {
     String id;
     String email;
     String password;
-    String role;
+
+    @Builder.Default
+    String role = "ROLE_USER";
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    Set<Orders> orders = new HashSet<>();
+    Set<Orders> orders;
 }

@@ -1,13 +1,11 @@
 package org.example.projectgt.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,10 +13,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
+@Setter
 public class Product {
-    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
@@ -27,19 +24,18 @@ public class Product {
     BigDecimal price;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<ProductHardware> productHardwares = new HashSet<>();
+    Set<ProductHardware> productHardwares;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<ProductImg> imgs = new HashSet<>();
+    Set<ProductImg> productImgs;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<ProductSubcategory> productSubcategories = new HashSet<>();
+    Set<ProductSubcategory> productSubcategories;
 
-    @OneToMany(mappedBy = "product", orphanRemoval = true, cascade = CascadeType.ALL)
-    Set<OrderItem> orderItems = new HashSet<>();
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    Set<OrderItem> orderItems;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "topProduct_id")
     TopProduct topProduct;
 }

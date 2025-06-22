@@ -21,5 +21,5 @@ public class Hardware {
     String imgUrl;
 
     @OneToMany(mappedBy = "hardware", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<ProductHardware> productHardwares = new HashSet<>();
+    Set<ProductHardware> productHardwares;
 }

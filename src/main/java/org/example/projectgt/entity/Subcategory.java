@@ -20,9 +20,9 @@ public class Subcategory {
     String name;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    Category category;
+    @JoinColumn(name = "category_group_id")
+    CategoryGroup categoryGroup;
 
     @OneToMany(mappedBy = "subcategory", cascade = CascadeType.ALL, orphanRemoval = true)
-    Set<ProductSubcategory> productSubcategories = new HashSet<>();
+    Set<ProductSubcategory> productSubcategories;
 }
