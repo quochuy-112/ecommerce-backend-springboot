@@ -19,6 +19,7 @@ public enum ErrorCode {
     PRODUCT_PRICE_INVALID(1008, "Product price is invalid"),
     CATEGORY_NAME_INVALID(1009, "Category name is invalid"),
     CATEGORY_EXISTED(1010, "Category already existed"),
+    CATEGORY_NOT_EXIST(1011, "Category does not exist"),
     ;
     int code;
     String message;
