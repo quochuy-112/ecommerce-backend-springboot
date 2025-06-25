@@ -20,6 +20,14 @@ public enum ErrorCode {
     CATEGORY_NAME_INVALID(1009, "Category name is invalid"),
     CATEGORY_EXISTED(1010, "Category already existed"),
     CATEGORY_NOT_EXIST(1011, "Category does not exist"),
+    CATEGORYGROUP_NAME_INVALID(1012, "Category group name is invalid"),
+    CATEGORY_GROUP_NOT_EXIST(1013, "Category group does not exist"),
+    CATEGORY_ID_INVALID(1014, "Category id is invalid"),
+    CATEGORY_GROUP_EXISTED(1015, "Category group already existed"),
+    SUBCATEGORY_NAME_INVALID(1016, "Subcategory name is invalid"),
+    SUBCATEGORY_EXISTED(1017, "Subcategory already existed"),
+    SUBCATEGORY_NOT_EXIST(1018, "Subcategory does not exist"),
+    PRODUCT_EXISTED_IN_SUBCATEGORY(1019, "Product already existed in subcategory"),
     ;
     int code;
     String message;
