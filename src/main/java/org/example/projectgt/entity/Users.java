@@ -20,8 +20,7 @@ public class Users {
     String email;
     String password;
 
-    @Builder.Default
-    String role = "ROLE_USER";
+    String role;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     Set<Orders> orders;

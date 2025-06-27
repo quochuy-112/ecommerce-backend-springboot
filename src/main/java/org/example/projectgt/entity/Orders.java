@@ -3,6 +3,7 @@ package org.example.projectgt.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,7 +24,7 @@ public class Orders {
     BigDecimal total;
     LocalDate orderDate;
 
-    @OneToMany(mappedBy = "order", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orders", orphanRemoval = true, cascade = CascadeType.ALL)
     Set<OrderItem> orderItems;
 
     @ManyToOne
