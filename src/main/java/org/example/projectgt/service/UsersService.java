@@ -3,26 +3,32 @@ package org.example.projectgt.service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.example.projectgt.dto.request.UsersCreation;
 import org.example.projectgt.dto.response.OrdersResponse;
 import org.example.projectgt.dto.response.UsersResponse;
 import org.example.projectgt.entity.Orders;
 import org.example.projectgt.entity.Users;
+import org.example.projectgt.enums.Role;
 import org.example.projectgt.exception.AppException;
 import org.example.projectgt.exception.ErrorCode;
 import org.example.projectgt.mapper.OrdersMapper;
 import org.example.projectgt.mapper.UsersMapper;
 import org.example.projectgt.repository.OrdersRepository;
 import org.example.projectgt.repository.UsersRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Security;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
@@ -31,7 +37,7 @@ public class UsersService {
     OrdersRepository ordersRepository;
     UsersMapper usersMapper;
     OrdersMapper ordersMapper;
-
+    PasswordEncoder passwordEncoder;
 
     public UsersResponse createUsers(UsersCreation usersCreation) {
         if(usersRepository.existsByEmail(usersCreation.getEmail()))
@@ -39,9 +45,11 @@ public class UsersService {
 
         Users users = usersMapper.toUsers(usersCreation);
 
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-
         users.setPassword(passwordEncoder.encode(usersCreation.getPassword()));
+
+        Set<String> roles = new HashSet<>();
+        roles.add(Role.USER.name());
+        users.setRoles(roles);
 
         return usersMapper.toUsersResponse(usersRepository.save(users));
     }
@@ -62,6 +70,11 @@ public class UsersService {
     }
 
     public List<UsersResponse> getAllUsers() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        log.info("User name: {}", authentication.getName());
+        authentication.getAuthorities().forEach(authority -> log.info("Role: {}", authority.getAuthority()));
+
         return usersRepository.findAll()
                 .stream()
                 .map(usersMapper::toUsersResponse)

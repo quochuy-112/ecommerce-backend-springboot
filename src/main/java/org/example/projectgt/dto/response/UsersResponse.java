@@ -14,6 +14,6 @@ import java.util.Set;
 public class UsersResponse {
     String id;
     String email;
-    String password;
+    Set<String> roles;
     Set<OrdersResponse> orders;
 }
