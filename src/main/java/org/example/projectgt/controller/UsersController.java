@@ -50,4 +50,12 @@ public class UsersController {
         apiResponse.setData("User deleted successfully");
         return apiResponse;
     }
+
+    @GetMapping("/myInfo")
+    public ApiResponse<UsersResponse> getMyInfo() {
+        ApiResponse<UsersResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setData(usersService.getMyInfo());
+
+        return apiResponse;
+    }
 }

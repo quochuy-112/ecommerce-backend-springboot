@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.projectgt.dto.request.UsersCreation;
 import org.example.projectgt.dto.response.OrdersResponse;
 import org.example.projectgt.dto.response.UsersResponse;
-import org.example.projectgt.entity.Orders;
 import org.example.projectgt.entity.Users;
 import org.example.projectgt.enums.Role;
 import org.example.projectgt.exception.AppException;
@@ -16,13 +15,12 @@ import org.example.projectgt.mapper.OrdersMapper;
 import org.example.projectgt.mapper.UsersMapper;
 import org.example.projectgt.repository.OrdersRepository;
 import org.example.projectgt.repository.UsersRepository;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Security;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,6 +52,7 @@ public class UsersService {
         return usersMapper.toUsersResponse(usersRepository.save(users));
     }
 
+    @PostAuthorize("returnObject.email == authentication.name")
     public UsersResponse getUserById(String id) {
         if(!usersRepository.existsById(id)) {
             throw new AppException(ErrorCode.USER_NOT_EXIST);
@@ -69,6 +68,7 @@ public class UsersService {
         return usersResponse;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UsersResponse> getAllUsers() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -86,5 +86,15 @@ public class UsersService {
             throw new AppException(ErrorCode.USER_NOT_EXIST);
         }
         usersRepository.deleteById(id);
+    }
+
+    public UsersResponse getMyInfo(){
+        var context = SecurityContextHolder.getContext();
+        String email = context.getAuthentication().getName();
+
+        Users users = usersRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
+
+        return usersMapper.toUsersResponse(users);
     }
 }
