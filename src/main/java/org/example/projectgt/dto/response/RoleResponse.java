@@ -2,7 +2,6 @@ package org.example.projectgt.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.example.projectgt.entity.Role;
 
 import java.util.Set;
 
@@ -12,9 +11,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UsersResponse {
-    String id;
-    String email;
-    Set<Role> roles;
-    Set<OrdersResponse> orders;
+public class RoleResponse {
+    String name;
+    String description;
+    Set<PermissionResponse> permissions;
 }

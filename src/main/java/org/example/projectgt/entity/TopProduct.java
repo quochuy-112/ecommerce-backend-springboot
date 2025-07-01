@@ -10,8 +10,9 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
+@Getter
+@Setter
 public class TopProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

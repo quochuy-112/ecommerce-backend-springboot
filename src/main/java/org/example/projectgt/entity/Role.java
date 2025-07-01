@@ -13,16 +13,11 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-public class Users {
+public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
-    String email;
-    String password;
+    String name;
+    String description;
 
     @ManyToMany
-    Set<Role> roles;
-
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    Set<Orders> orders;
+    Set<Permission> permissions;
 }

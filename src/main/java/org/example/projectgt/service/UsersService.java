@@ -47,7 +47,7 @@ public class UsersService {
 
         Set<String> roles = new HashSet<>();
         roles.add(Role.USER.name());
-        users.setRoles(roles);
+        //users.setRoles(roles);
 
         return usersMapper.toUsersResponse(usersRepository.save(users));
     }
