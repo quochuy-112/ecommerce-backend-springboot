@@ -1,6 +1,7 @@
 package org.example.projectgt.mapper;
 
 import org.example.projectgt.dto.request.UsersCreation;
+import org.example.projectgt.dto.request.UsersUpdateRequest;
 import org.example.projectgt.dto.response.UsersResponse;
 import org.example.projectgt.entity.Users;
 import org.mapstruct.Mapper;
@@ -15,6 +16,7 @@ public interface UsersMapper {
     UsersResponse toUsersResponse(Users users);
 
     @Mapping(target = "orders", ignore = true)
+    @Mapping(target = "roles", ignore = true)
     @Mapping(target = "id", ignore = true)
-    Users updateUsers(@MappingTarget Users users, UsersCreation usersCreation);
+    Users updateUsers(@MappingTarget Users users, UsersUpdateRequest usersUpdateRequest);
 }

@@ -2,7 +2,6 @@ package org.example.projectgt.dto.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.example.projectgt.entity.Role;
 
 import java.util.Set;
 
@@ -15,6 +14,6 @@ import java.util.Set;
 public class UsersResponse {
     String id;
     String email;
-    Set<Role> roles;
+    Set<RoleResponse> roles;
     Set<OrdersResponse> orders;
 }

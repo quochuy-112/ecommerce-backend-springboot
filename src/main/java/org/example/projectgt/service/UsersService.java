@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.example.projectgt.dto.request.UsersCreation;
+import org.example.projectgt.dto.request.UsersUpdateRequest;
 import org.example.projectgt.dto.response.OrdersResponse;
 import org.example.projectgt.dto.response.UsersResponse;
 import org.example.projectgt.entity.Users;
@@ -14,6 +15,7 @@ import org.example.projectgt.exception.ErrorCode;
 import org.example.projectgt.mapper.OrdersMapper;
 import org.example.projectgt.mapper.UsersMapper;
 import org.example.projectgt.repository.OrdersRepository;
+import org.example.projectgt.repository.RoleRepository;
 import org.example.projectgt.repository.UsersRepository;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +38,7 @@ public class UsersService {
     UsersMapper usersMapper;
     OrdersMapper ordersMapper;
     PasswordEncoder passwordEncoder;
+    RoleRepository roleRepository;
 
     public UsersResponse createUsers(UsersCreation usersCreation) {
         if(usersRepository.existsByEmail(usersCreation.getEmail()))
@@ -68,7 +71,8 @@ public class UsersService {
         return usersResponse;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('DELETE')")
     public List<UsersResponse> getAllUsers() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -96,5 +100,18 @@ public class UsersService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
 
         return usersMapper.toUsersResponse(users);
+    }
+
+    public UsersResponse updateUser(String userId, UsersUpdateRequest usersUpdateRequest){
+        Users users = usersRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXIST));
+
+        usersMapper.updateUsers(users, usersUpdateRequest);
+        users.setPassword(passwordEncoder.encode(usersUpdateRequest.getPassword()));
+
+        var roles = roleRepository.findAllById(usersUpdateRequest.getRoles());
+        users.setRoles(new HashSet<>(roles));
+
+        return usersMapper.toUsersResponse(usersRepository.save(users));
     }
 }

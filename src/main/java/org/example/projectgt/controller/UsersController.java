@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.example.projectgt.dto.request.UsersCreation;
+import org.example.projectgt.dto.request.UsersUpdateRequest;
 import org.example.projectgt.dto.response.ApiResponse;
 import org.example.projectgt.dto.response.UsersResponse;
 import org.example.projectgt.service.UsersService;
@@ -55,6 +56,14 @@ public class UsersController {
     public ApiResponse<UsersResponse> getMyInfo() {
         ApiResponse<UsersResponse> apiResponse = new ApiResponse<>();
         apiResponse.setData(usersService.getMyInfo());
+
+        return apiResponse;
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse<UsersResponse> updateUsers(@PathVariable String id, @RequestBody UsersUpdateRequest usersUpdateRequest){
+        ApiResponse<UsersResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setData(usersService.updateUser(id, usersUpdateRequest));
 
         return apiResponse;
     }
