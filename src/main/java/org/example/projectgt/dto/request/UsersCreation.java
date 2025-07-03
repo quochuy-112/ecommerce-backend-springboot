@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.example.projectgt.validator.BirthdayConstraint;
+
+import java.time.LocalDate;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -18,6 +21,13 @@ public class UsersCreation {
 
     @NotNull(message = "PASSWORD_INVALID")
     @Size(min = 8, max = 32,message = "PASSWORD_INVALID")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,32}$", message = "PASSWORD_INVALID")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!])", message = "PASSWORD_INVALID")
     String password;
+
+    String firstName;
+
+    String lastName;
+
+    @BirthdayConstraint(min = 18, message = "INVALID_BIRTHDATE")
+    LocalDate birthDate;
 }

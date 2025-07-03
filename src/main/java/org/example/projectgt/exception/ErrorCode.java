@@ -32,10 +32,11 @@ public enum ErrorCode {
     PRODUCT_EXISTED_IN_SUBCATEGORY(1019, "Product already existed in subcategory", HttpStatus.BAD_REQUEST),
     USER_EMAIL_EXISTED(1020, "User email already existed", HttpStatus.BAD_REQUEST),
     EMAIL_INVALID(1021, "Email is invalid", HttpStatus.BAD_REQUEST),
-    PASSWORD_INVALID(1022, "Password is invalid", HttpStatus.BAD_REQUEST),
+    PASSWORD_INVALID(1022, "Password must be between 8 and 32 character", HttpStatus.BAD_REQUEST),
     USER_NOT_EXIST(1023, "User does not exist", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(1024, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1025, "You dot not have permission", HttpStatus.FORBIDDEN),
+    INVALID_BIRTHDATE(1026, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
     ;
 
     int code;
