@@ -1,4 +1,4 @@
-# Electronic Product Sales Backend System
+# TechCommerce Backend Backend System
 
 This is a backend project for an electronic product sales system, built using **Spring Boot**. It provides RESTful APIs for managing users, authentication, product data, and order processing.
 
