@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.example.projectgt.dto.request.AuthenticationRequest;
 import org.example.projectgt.dto.request.IntrospectRequest;
+import org.example.projectgt.dto.request.LogoutRequest;
+import org.example.projectgt.dto.request.RefreshRequest;
 import org.example.projectgt.dto.response.ApiResponse;
 import org.example.projectgt.dto.response.AuthenticationResponse;
 import org.example.projectgt.dto.response.IntrospectResponse;
@@ -39,6 +41,23 @@ public class AuthenticationController {
         apiResponse.setData(authenticationService.introspect(introspectRequest));
 
         return apiResponse;
+    }
+
+    @PostMapping("/refresh")
+    public ApiResponse<AuthenticationResponse> authenticate(@Valid @RequestBody RefreshRequest refreshRequest) throws JOSEException, ParseException {
+        ApiResponse<AuthenticationResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setData(authenticationService.refreshToken(refreshRequest));
+
+        return apiResponse;
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(@Valid @RequestBody LogoutRequest logoutRequest) throws ParseException, JOSEException {
+
+        authenticationService.logout(logoutRequest);
+
+        return ApiResponse.<Void>builder()
+                .build();
     }
 
 }

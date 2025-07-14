@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class IntrospectRequest {
+public class RefreshRequest {
     String token;
 }
