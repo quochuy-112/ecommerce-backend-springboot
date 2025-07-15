@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 import org.example.projectgt.dto.request.AuthenticationRequest;
 import org.example.projectgt.dto.request.IntrospectRequest;
 import org.example.projectgt.dto.request.LogoutRequest;
@@ -35,6 +36,7 @@ import java.util.Date;
 import java.util.StringJoiner;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
@@ -46,12 +48,20 @@ public class AuthenticationService {
     @Value("${jwt.signerKey}")
     protected String SIGNER_KEY;
 
+    @NonFinal
+    @Value("${jwt.valid-duration}")
+    protected Long VALIDATION_DURATION;
+
+    @NonFinal
+    @Value("${jwt.refreshable-duration}")
+    protected Long REFRESHABLE_DURATION;
+
     public IntrospectResponse introspect(IntrospectRequest introspectRequest) throws JOSEException, ParseException {
         var token = introspectRequest.getToken();
         boolean isValid = true;
 
         try{
-            verifyToken(token);
+            verifyToken(token, false);
         }catch (AppException e){
             isValid = false;
         }
@@ -81,28 +91,36 @@ public class AuthenticationService {
     }
 
     public void logout(LogoutRequest request) throws ParseException, JOSEException {
-        var signToken = verifyToken(request.getToken());
+        try{
+            var signToken = verifyToken(request.getToken(), true);
 
-        String jti = signToken.getJWTClaimsSet().getJWTID();
+            String jti = signToken.getJWTClaimsSet().getJWTID();
 
-        Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
+            Date expiryTime = signToken.getJWTClaimsSet().getExpirationTime();
 
-        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
-                .id(jti)
-                .expiryTime(expiryTime)
-                .build();
+            InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                    .id(jti)
+                    .expiryTime(expiryTime)
+                    .build();
 
-        invalidatedTokenRepository.save(invalidatedToken);
+            invalidatedTokenRepository.save(invalidatedToken);
+
+        }catch (AppException e){
+            log.info("Token already expired");
+        }
     }
 
-    private SignedJWT verifyToken(String token) throws ParseException, JOSEException {
+    private SignedJWT verifyToken(String token, boolean isRefresh) throws ParseException, JOSEException {
         JWSVerifier jwsVerifier = new MACVerifier(SIGNER_KEY.getBytes());
 
         SignedJWT signedJWT = SignedJWT.parse(token);
 
         var verified = signedJWT.verify(jwsVerifier);
 
-        Date expirationDate = signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date expirationDate = (isRefresh) ?
+                new Date (signedJWT.getJWTClaimsSet().getIssueTime().toInstant()
+                        .plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS).toEpochMilli())
+                : signedJWT.getJWTClaimsSet().getExpirationTime();
 
         if(!verified && expirationDate.after(new Date()))
             throw new AppException(ErrorCode.UNAUTHENTICATED);
@@ -114,7 +132,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse refreshToken(RefreshRequest request) throws ParseException, JOSEException {
-        var signedJWT = verifyToken(request.getToken());
+        var signedJWT = verifyToken(request.getToken(), true);
 
         var jti = signedJWT.getJWTClaimsSet().getJWTID();
         var expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
@@ -148,7 +166,7 @@ public class AuthenticationService {
                 .issuer("projectgt.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now()
-                        .plus(1, ChronoUnit.HOURS)
+                        .plus(VALIDATION_DURATION, ChronoUnit.SECONDS)
                         .toEpochMilli()
                 ))
                 .jwtID(UUID.randomUUID().toString())
